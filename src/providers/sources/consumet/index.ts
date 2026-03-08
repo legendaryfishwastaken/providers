@@ -66,7 +66,7 @@ async function consumetScraper(ctx: ShowScrapeContext): Promise<SourcererOutput>
 export const ConsumetScraper = makeSourcerer({
   id: 'consumet',
   name: 'Consumet (Anime) 🔥',
-  rank: 5,
+  rank: 42,
   disabled: false,
   flags: [flags.CORS_ALLOWED],
   scrapeShow: consumetScraper,
