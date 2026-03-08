@@ -1,14 +1,6 @@
 import { MediaTypes } from '@/entrypoint/utils/media';
 
-export const febBoxBase = `https://www.febbox.com`;
-
-export interface FebboxFileList {
-  file_name: string;
-  ext: string;
-  fid: number;
-  oss_fid: number;
-  is_dir: 0 | 1;
-}
+export const femboxBase = `https://fembox.aether.mom`;
 
 export function parseInputUrl(url: string) {
   const [type, id, seasonId, episodeId] = url.slice(1).split('/');

@@ -1,52 +1,46 @@
 import { flags } from '@/entrypoint/utils/targets';
 import { makeEmbed } from '@/providers/base';
+import { NotFoundError } from '@/utils/errors';
 
-import { parseInputUrl } from './common';
-import { getStreamQualities } from './qualities';
-import { getSubtitles } from './subtitles';
+import { femboxBase, parseInputUrl } from './common';
+
+interface FemboxResponse {
+  hls?: string;
+}
 
 export const febboxMp4Scraper = makeEmbed({
   id: 'febbox-mp4',
-  name: 'Febbox (MP4)',
+  name: 'Fembox',
   rank: 190,
+  flags: [flags.CORS_ALLOWED],
   async scrape(ctx) {
     const { type, id, season, episode } = parseInputUrl(ctx.url);
-    let apiQuery: object | null = null;
 
+    let apiUrl: string;
     if (type === 'movie') {
-      apiQuery = {
-        uid: '',
-        module: 'Movie_downloadurl_v3',
-        mid: id,
-        oss: '1',
-        group: '',
-      };
+      apiUrl = `${femboxBase}/hls/movie/${id}`;
     } else if (type === 'show') {
-      apiQuery = {
-        uid: '',
-        module: 'TV_downloadurl_v3',
-        tid: id,
-        season,
-        episode,
-        oss: '1',
-        group: '',
-      };
+      if (season === undefined || episode === undefined)
+        throw new Error('Season and episode are required for TV show streams');
+      apiUrl = `${femboxBase}/hls/tv/${id}/${season}/${episode}`;
+    } else {
+      throw new Error(`Invalid media type: expected "movie" or "show"`);
     }
 
-    if (!apiQuery) throw Error('Incorrect type');
+    const result = await ctx.proxiedFetcher<FemboxResponse>(apiUrl);
 
-    const { qualities, fid } = await getStreamQualities(ctx, apiQuery);
-    if (fid === undefined) throw new Error('No streamable file found');
-    ctx.progress(70);
+    if (!result.hls) throw new NotFoundError('No stream found');
+
+    ctx.progress(90);
 
     return {
       stream: [
         {
           id: 'primary',
-          captions: await getSubtitles(ctx, id, fid, type, episode, season),
-          qualities,
-          type: 'file',
+          type: 'hls',
+          playlist: result.hls,
           flags: [flags.CORS_ALLOWED],
+          captions: [],
         },
       ],
     };
