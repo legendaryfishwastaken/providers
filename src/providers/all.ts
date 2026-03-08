@@ -1,5 +1,6 @@
 import { Embed, Sourcerer } from '@/providers/base';
 import { doodScraper } from '@/providers/embeds/dood';
+import { febboxMp4Scraper } from '@/providers/embeds/febbox/mp4';
 import { filemoonScraper } from '@/providers/embeds/filemoon';
 import { mixdropScraper } from '@/providers/embeds/mixdrop';
 import { serverMirrorEmbed } from '@/providers/embeds/server-mirrors';
@@ -27,6 +28,7 @@ import {
 } from './embeds/autoembed';
 import { cinemaosEmbeds } from './embeds/cinemaos';
 import { closeLoadScraper } from './embeds/closeload';
+import { ConsumetEmbeds } from './embeds/consumet';
 import { droploadScraper } from './embeds/dropload';
 import { filelionsScraper } from './embeds/filelions';
 import { mp4hydraServer1Scraper, mp4hydraServer2Scraper } from './embeds/mp4hydra';
@@ -72,6 +74,7 @@ import { animeflvScraper } from './sources/animeflv';
 import { animetsuScraper } from './sources/animetsu';
 import { cinehdplusScraper } from './sources/cinehdplus-es';
 import { coitusScraper } from './sources/coitus';
+import { ConsumetScraper } from './sources/consumet/index';
 import { cuevana3Scraper } from './sources/cuevana3';
 import { debridScraper } from './sources/debrid';
 import { embedsuScraper } from './sources/embedsu';
@@ -121,6 +124,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     slidemoviesScraper,
     vidapiClickScraper,
     coitusScraper,
+    ConsumetScraper,
     streamboxScraper,
     nunflixScraper,
     EightStreamScraper,
@@ -210,5 +214,7 @@ export function gatherAllEmbeds(): Array<Embed> {
     droploadScraper,
     supervideoScraper,
     voeScraper,
+    febboxMp4Scraper,
+    ...ConsumetEmbeds,
   ];
 }

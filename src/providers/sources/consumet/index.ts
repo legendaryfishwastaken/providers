@@ -36,25 +36,26 @@ async function consumetScraper(ctx: ShowScrapeContext): Promise<SourcererOutput>
 
   // Parse embeds
   const query = {
-    episodeId: `${bestMatch.id}$${ctx.media.season.number}$${targetEpisode.id}$both`,
+    episodeId: targetEpisode.id,
+    category: 'sub',
   };
 
   const embeds = [
     {
       embedId: 'consumet-vidcloud',
-      url: JSON.stringify({ ...query, server: 'vidcloud' }),
+      url: JSON.stringify({ ...query }),
     },
     {
       embedId: 'consumet-streamsb',
-      url: JSON.stringify({ ...query, server: 'streamsb' }),
+      url: JSON.stringify({ ...query }),
     },
     {
       embedId: 'consumet-vidstreaming',
-      url: JSON.stringify({ ...query, server: 'vidstreaming' }),
+      url: JSON.stringify({ ...query }),
     },
     {
       embedId: 'consumet-streamtape',
-      url: JSON.stringify({ ...query, server: 'streamtape' }),
+      url: JSON.stringify({ ...query }),
     },
   ];
 
