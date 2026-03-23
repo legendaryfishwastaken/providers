@@ -88,6 +88,7 @@ import { pelisplushdScraper } from './sources/pelisplushd';
 import { primewireScraper } from './sources/primewire';
 import { rgshowsScraper } from './sources/rgshows';
 import { ridooMoviesScraper } from './sources/ridomovies';
+import { showboxScraper } from './sources/showbox';
 import { slidemoviesScraper } from './sources/slidemovies';
 import { soaperTvScraper } from './sources/soapertv';
 import { streamboxScraper } from './sources/streambox';
@@ -127,6 +128,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     ConsumetScraper,
     streamboxScraper,
     nunflixScraper,
+    showboxScraper,
     EightStreamScraper,
     wecimaScraper,
     animeflvScraper,
